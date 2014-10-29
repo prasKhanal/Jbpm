@@ -1,0 +1,4 @@
+<jboss-web>
+    <context-root>jbpm-demo-rewards-basic</context-root>
+    <security-domain>java:/jaas/DBAuthTest</security-domain>
+</jboss-web>
