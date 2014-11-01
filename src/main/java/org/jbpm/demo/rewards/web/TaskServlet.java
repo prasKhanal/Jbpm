@@ -64,7 +64,11 @@ public class TaskServlet extends HttpServlet {
     	 
          if (submit.equals("Claim Task")){
         	Long taskId =Long.parseLong( req.getParameter("taskId"));
-         	taskService.claimTask(taskId,req.getUserPrincipal().getName());
+         	try {
+				taskService.claimTask(taskId,req.getUserPrincipal().getName());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
         	 }
          
     	 List<TaskSummary> taskList;

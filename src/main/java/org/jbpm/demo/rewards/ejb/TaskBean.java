@@ -106,10 +106,17 @@ public class TaskBean implements TaskLocal {
     }
 
 	@Override
-	public void claimTask(long taskId, String userId) {
-		taskService.claim(taskId, userId);
-		System.out.println(" Task id = " + taskId+" Claimed By User "+userId);
-		
+	public void claimTask(long taskId, String actorId) throws Exception  {
+		 ut.begin();
+	        
+	        
+	        try {
+	           taskService.claim(taskId, actorId);
+	            ut.commit();
+	        } catch (RollbackException e) {
+	            e.printStackTrace();
+	            throw new RuntimeException(e);
+	        }		
 	}
 
 	@Override

@@ -31,13 +31,17 @@
 			<% 
 			List<TaskSummary> tasklist = (List<TaskSummary>)request.getAttribute("taskList");
 			String message = "no ticket";
+			String taskOwner="";
 			if(tasklist.size() == 1) {
 				message = "1 ticket";
 			} else if(tasklist.size() > 1){
 				message = tasklist.size() + " tickets" ;
 			}
 			for (TaskSummary task : tasklist) { 
-				
+				if(task.getActualOwnerId()!=null)taskOwner=task.getActualOwnerId();
+				else taskOwner="";
+				out.print(taskOwner);
+				if(taskOwner.equals(user)||!task.getStatus().toString().equals("Reserved")){
 			%>
 			<tr>
 			<td><%= task.getName() %></td>
@@ -45,14 +49,17 @@
 			<td><%=task.getProcessInstanceId() %>
 			</td>
 			<td>
-			<%=task.getStatus().toString() %>></td>
+			<%=task.getStatus().toString() %>
+			</td>
+			
 			<td><form action="task" method="post">
 			<input type="hidden" name="taskId" value="<%= task.getId() %>" />
-			<input type="submit" name="submit" value="Claim Task"/>
+			<input type="submit" name="submit"
+			 value="<%if(taskOwner.equals(user)) {%>Start Task<%}else {%>Claim Task<%}%>"/>
 			</form>
 			</td>
 			</tr>
-			<% } %>
+			<% }} %>
 			
 			</table>
 			

@@ -28,7 +28,7 @@ public interface TaskLocal {
 
     public void approveTask(String actorId, long taskId) throws Exception;
 
-	public void claimTask(long taskId, String name);
+	public void claimTask(long taskId, String name) throws Exception;
 
 	public List<TaskSummary> retrieveClaimedTaskList(String user) throws Exception;
 }
