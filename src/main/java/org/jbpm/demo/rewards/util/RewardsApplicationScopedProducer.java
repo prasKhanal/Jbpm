@@ -16,6 +16,10 @@
 
 package org.jbpm.demo.rewards.util;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
@@ -25,13 +29,19 @@ import javax.persistence.PersistenceUnit;
 
 import org.jbpm.runtime.manager.impl.RuntimeEnvironmentBuilder;
 import org.jbpm.runtime.manager.impl.cdi.InjectableRegisterableItemsFactory;
+import org.jbpm.services.task.HumanTaskConfigurator;
+import org.jbpm.services.task.HumanTaskServiceFactory;
+import org.jbpm.services.task.audit.JPATaskLifeCycleEventListener;
+import org.jbpm.services.task.identity.DBUserGroupCallbackImpl;
+import org.jbpm.services.task.identity.DefaultUserInfo;
+import org.jbpm.services.task.impl.command.CommandBasedTaskService;
 import org.kie.api.io.ResourceType;
+import org.kie.api.task.TaskService;
 import org.kie.internal.io.ResourceFactory;
 import org.kie.internal.runtime.manager.RuntimeEnvironment;
 import org.kie.internal.runtime.manager.cdi.qualifier.PerProcessInstance;
 import org.kie.internal.runtime.manager.cdi.qualifier.PerRequest;
 import org.kie.internal.runtime.manager.cdi.qualifier.Singleton;
-import org.kie.internal.task.api.UserGroupCallback;
 
 @ApplicationScoped
 public class RewardsApplicationScopedProducer {
@@ -40,14 +50,33 @@ public class RewardsApplicationScopedProducer {
     private InjectableRegisterableItemsFactory factory;
     
     @Inject
-    private UserGroupCallback usergroupCallback;
+    private DBUserGroupCallbackImpl usergroupCallback;
+    
+    @Inject
+    private TaskService taskService;
 
     @PersistenceUnit(unitName = "org.jbpm.newTask")
     private EntityManagerFactory emf;
 
 
     @Produces
-    public UserGroupCallback produceUserGroupCallback() {
+    public DBUserGroupCallbackImpl produceUserGroupCallback() {
+    	Properties properties = new Properties();
+    	
+    	properties.setProperty(DBUserGroupCallbackImpl.DS_JNDI_NAME, "java:/mysqlDS");
+    	properties.setProperty(DBUserGroupCallbackImpl.PRINCIPAL_QUERY, "select principal_id  from principles where principal_id = ?");
+    	properties.setProperty(DBUserGroupCallbackImpl.ROLES_QUERY, "select role_group from roles where role_group = ?");
+    	properties.setProperty(DBUserGroupCallbackImpl.USER_ROLES_QUERY, "select role_group from roles where principal_id = ?");
+		try {
+		 
+		  for(String key : properties.stringPropertyNames()) {
+			  String value = properties.getProperty(key);
+			  System.out.println(key + " => " + value);
+			}
+		} catch (Exception e) {
+			  System.out.println(e);
+		}
+    	usergroupCallback=new DBUserGroupCallbackImpl(properties);
         return usergroupCallback;
     }
 
@@ -72,6 +101,21 @@ public class RewardsApplicationScopedProducer {
                 .addAsset(ResourceFactory.newClassPathResource("newTask.bpmn2"),ResourceType.BPMN2).get();
         return environment;
     }
+    
 
+    @Produces
+	public CommandBasedTaskService produceTaskService(EntityManagerFactory emf) {
+		if (taskService == null) {
+			HumanTaskConfigurator configurator = HumanTaskServiceFactory.newTaskServiceConfigurator()
+					.entityManagerFactory(emf)
+					.userGroupCallback(usergroupCallback)
+					.userInfo(new DefaultUserInfo(true));
 
+			
+			this.taskService = (CommandBasedTaskService) configurator.getTaskService();	
+		}
+		
+		return (CommandBasedTaskService)taskService;
+	}
+  
 }

@@ -10,7 +10,10 @@
 
   <persistence-unit name="org.jbpm.newTask" transaction-type="JTA">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
-    <jta-data-source>java:jboss/datasources/jBPMRewardsDemotDS</jta-data-source>
+    <jta-data-source>java:/mysqlDS</jta-data-source>
+     <mapping-file>META-INF/Taskorm.xml</mapping-file>
+         <mapping-file>META-INF/JBPMorm.xml</mapping-file>
+   
        
         <class>org.drools.persistence.info.SessionInfo</class>
         <class>org.jbpm.persistence.processinstance.ProcessInstanceInfo</class>
@@ -45,10 +48,10 @@
         <class>org.jbpm.services.task.impl.model.UserImpl</class>
     
         <!--BAM for task service -->
-        <class>org.jbpm.services.task.impl.model.BAMTaskSummaryImpl</class>
+    <class>org.jbpm.services.task.audit.impl.model.BAMTaskSummaryImpl</class>
     
         <!-- Event Classes -->
-        <class>org.jbpm.services.task.audit.TaskEventImpl</class>
+    <class>org.jbpm.services.task.audit.impl.model.TaskEventImpl</class>
         
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
@@ -57,7 +60,7 @@
       <property name="hibernate.hbm2ddl.auto" value="update" />
       <property name="hibernate.show_sql" value="false" />	
       <property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup" />
-	  <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+	  <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
       <property name="hibernate.id.new_generator_mappings" value="false"/>
     </properties>        
   </persistence-unit>
