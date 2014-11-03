@@ -63,7 +63,7 @@ public class RewardsApplicationScopedProducer {
     public DBUserGroupCallbackImpl produceUserGroupCallback() {
     	Properties properties = new Properties();
     	
-    	properties.setProperty(DBUserGroupCallbackImpl.DS_JNDI_NAME, "java:/mysqlDS");
+    	properties.setProperty(DBUserGroupCallbackImpl.DS_JNDI_NAME, "java:/mysqlCredential");
     	properties.setProperty(DBUserGroupCallbackImpl.PRINCIPAL_QUERY, "select principal_id  from principles where principal_id = ?");
     	properties.setProperty(DBUserGroupCallbackImpl.ROLES_QUERY, "select role_group from roles where role_group = ?");
     	properties.setProperty(DBUserGroupCallbackImpl.USER_ROLES_QUERY, "select role_group from roles where principal_id = ?");

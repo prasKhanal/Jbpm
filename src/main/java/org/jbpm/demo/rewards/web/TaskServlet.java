@@ -63,13 +63,13 @@ public class TaskServlet extends HttpServlet {
     	 
     	 
          if (submit.equals("Claim Task")){
-        	Long taskId =Long.parseLong( req.getParameter("taskId"));
+        	 Long taskId =Long.parseLong( req.getParameter("taskId"));
          	try {
 				taskService.claimTask(taskId,req.getUserPrincipal().getName());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-        	 }
+        	 
          
     	 List<TaskSummary> taskList;
     	 try {
@@ -83,6 +83,14 @@ public class TaskServlet extends HttpServlet {
          RequestDispatcher dispatcher = context.getRequestDispatcher("/task.jsp");
          dispatcher.forward(req, res);
          return;
-   
+         }
+         if(submit.equals("CreateContent")){
+        	 Long taskId =Long.parseLong( req.getParameter("taskId"));
+        	 req.setAttribute("taskIs", taskId);
+        	 ServletContext context = this.getServletContext();
+             RequestDispatcher dispatcher = context.getRequestDispatcher("/createContent.jsp");
+             dispatcher.forward(req, res);
+             return;
+         }
 }
 }

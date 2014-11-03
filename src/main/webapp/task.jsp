@@ -40,7 +40,6 @@
 			for (TaskSummary task : tasklist) { 
 				if(task.getActualOwnerId()!=null)taskOwner=task.getActualOwnerId();
 				else taskOwner="";
-				out.print(taskOwner);
 				if(taskOwner.equals(user)||!task.getStatus().toString().equals("Reserved")){
 			%>
 			<tr>
@@ -55,7 +54,7 @@
 			<td><form action="task" method="post">
 			<input type="hidden" name="taskId" value="<%= task.getId() %>" />
 			<input type="submit" name="submit"
-			 value="<%if(taskOwner.equals(user)) {%>Start Task<%}else {%>Claim Task<%}%>"/>
+			 value="<%if(taskOwner.equals(user)) {%><%=task.getName() %><%}else {%>Claim Task<%}%>"/>
 			</form>
 			</td>
 			</tr>
