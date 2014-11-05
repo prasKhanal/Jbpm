@@ -140,6 +140,12 @@ public class TaskBean implements TaskLocal {
 
 	        return list;
 	    }
+
+	@Override
+	public void claimTask(String taskId, String name) throws Exception,NumberFormatException{
+		claimTask(Long.parseLong( taskId),name);
+		
+	}
 	
 
 }

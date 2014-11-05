@@ -52,9 +52,13 @@
 			</td>
 			
 			<td><form action="task" method="post">
-			<input type="hidden" name="taskId" value="<%= task.getId() %>" />
-			<input type="submit" name="submit"
-			 value="<%if(taskOwner.equals(user)) {%><%=task.getName() %><%}else {%>Claim Task<%}%>"/>
+			<input type="hidden" name="taskId" value="<%= task.getId()  %>"/> 
+			<%if(taskOwner.equals(user)) {%>
+			<a href="<%=task.getName()%>?taskId=<%= task.getId() %>">
+			<input type="button" value="<%=task.getName()%>"/>
+			</a>
+			<%}else 
+			{%> <input type="submit" name="submit" value="Claim Task"/><%}%>
 			</form>
 			</td>
 			</tr>

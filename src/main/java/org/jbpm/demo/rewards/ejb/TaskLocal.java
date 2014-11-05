@@ -31,4 +31,6 @@ public interface TaskLocal {
 	public void claimTask(long taskId, String name) throws Exception;
 
 	public List<TaskSummary> retrieveClaimedTaskList(String user) throws Exception;
+
+	public void claimTask(String taskId, String name) throws  Exception;
 }

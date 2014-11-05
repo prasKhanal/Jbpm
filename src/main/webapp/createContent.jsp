@@ -10,17 +10,17 @@
 </head>
 
 <body><div id="container" style=" height : 348px;">
-<%-- <% String taskId = (request.getAttribute("taskId")).toString(); %> --%>
+ <% String taskId = (request.getAttribute("taskId")).toString(); %>
       
         <div id="content">
 
             <p style="FONT-SIZE: large;">Create Content</p>
 
-           <form action="creatContent" method="POST" enctype="multipart/form-data">
+           <form action="createContent" method="POST">
 <p><%= request.getAttribute("message") == null ? "" : request.getAttribute("message") %></p>
 Client Name: <input type="text" name="clientName" /><BR/>
 Content Description: <input type="text" name="contentDescription" /><BR/>
-<%-- <input type="hidden" name="taskId" value="<%=taskId %>"> --%>
+ <input type="hidden" name="taskId" value="<%=taskId %>"/> 
 Contain Graphics: <select name="hasGraphics">
 <option value="true" >Yes</option>
 <option value="false" >No</option>

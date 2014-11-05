@@ -60,18 +60,18 @@ public class TaskServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
     	 String submit=req.getParameter("submit");
     	 String user = req.getUserPrincipal().getName();
+    	 List<TaskSummary> taskList;
     	 
-    	 
+    
          if (submit.equals("Claim Task")){
-        	 Long taskId =Long.parseLong( req.getParameter("taskId"));
+        	 String taskId = req.getParameter("taskId");
          	try {
 				taskService.claimTask(taskId,req.getUserPrincipal().getName());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-        	 
-         
-    	 List<TaskSummary> taskList;
+         }
+      
     	 try {
              taskList = taskService.retrieveClaimedTaskList(user);
          } catch (Exception e) {
@@ -84,13 +84,5 @@ public class TaskServlet extends HttpServlet {
          dispatcher.forward(req, res);
          return;
          }
-         if(submit.equals("CreateContent")){
-        	 Long taskId =Long.parseLong( req.getParameter("taskId"));
-        	 req.setAttribute("taskIs", taskId);
-        	 ServletContext context = this.getServletContext();
-             RequestDispatcher dispatcher = context.getRequestDispatcher("/createContent.jsp");
-             dispatcher.forward(req, res);
-             return;
-         }
-}
+         
 }
