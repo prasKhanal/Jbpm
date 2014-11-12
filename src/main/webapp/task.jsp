@@ -54,7 +54,7 @@
 			<td><form action="task" method="post">
 			<input type="hidden" name="taskId" value="<%= task.getId()  %>"/> 
 			<%if(taskOwner.equals(user)) {%>
-			<a href="<%=task.getName()%>?taskId=<%= task.getId() %>">
+			<a href="<%=task.getName()%>?taskId=<%= task.getId() %>&processId=<%=task.getProcessInstanceId() %>">
 			<input type="button" value="<%=task.getName()%>"/>
 			</a>
 			<%}else 

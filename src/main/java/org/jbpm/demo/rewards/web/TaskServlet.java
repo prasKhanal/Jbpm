@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -27,16 +28,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.jbpm.demo.rewards.ejb.TaskLocal;
+import org.kie.api.task.TaskService;
 import org.kie.api.task.model.TaskSummary;
+
+import com.jbpm.demo.service.TaskListService;
 
 @WebServlet("/task")
 public class TaskServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    @EJB
-    private TaskLocal taskService;
+    @Inject
+    private TaskListService taskService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

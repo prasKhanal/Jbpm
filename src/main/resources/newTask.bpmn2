@@ -3,18 +3,29 @@
   <bpmn2:itemDefinition id="_String" structureRef="String"/>
   <bpmn2:itemDefinition id="_Boolean" structureRef="Boolean"/>
   <bpmn2:itemDefinition id="ItemDefinition_1" structureRef="Integer"/>
-  <bpmn2:itemDefinition id="ItemDefinition_2" structureRef="java.awt.List"/>
   <bpmn2:itemDefinition id="ItemDefinition_4" structureRef="com.jbpm.demo.entity.Content"/>
+  <bpmn2:itemDefinition id="ItemDefinition_3" structureRef="com.jbpm.demo.entity.Client"/>
+  <bpmn2:itemDefinition id="ItemDefinition_5" structureRef="com.jbpm.demo.entity.ContentCatogory"/>
+  <bpmn2:itemDefinition id="ItemDefinition_6" structureRef="java.util.List"/>
+  <bpmn2:itemDefinition id="ItemDefinition_7" structureRef="java.util.Date"/>
   <bpmn2:process id="defaultPackage.newTask" tns:version="1" tns:packageName="defaultPackage" tns:adHoc="false" name="newTask" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
-      <tns:import name="java.awt.List"/>
       <tns:import name="com.jbpm.demo.entity.Content"/>
+      <tns:import name="com.jbpm.demo.entity.Client"/>
+      <tns:import name="com.jbpm.demo.entity.ContentCatogory"/>
+      <tns:import name="java.util.List"/>
+      <tns:import name="java.util.Date"/>
     </bpmn2:extensionElements>
     <bpmn2:property id="processCreator" itemSubjectRef="_String"/>
     <bpmn2:property id="contentDescription" itemSubjectRef="_String"/>
     <bpmn2:property id="hasGraphics" itemSubjectRef="_Boolean"/>
     <bpmn2:property id="clientName" itemSubjectRef="_String"/>
     <bpmn2:property id="Property_4" itemSubjectRef="_String"/>
+    <bpmn2:property id="Property_1" itemSubjectRef="ItemDefinition_3"/>
+    <bpmn2:property id="Property_2" itemSubjectRef="ItemDefinition_5"/>
+    <bpmn2:property id="Property_3" itemSubjectRef="ItemDefinition_6"/>
+    <bpmn2:property id="Property_5" itemSubjectRef="ItemDefinition_6"/>
+    <bpmn2:property id="Property_6" itemSubjectRef="ItemDefinition_7"/>
     <bpmn2:startEvent id="StartEvent_1" name="StartProcess">
       <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
     </bpmn2:startEvent>
@@ -22,79 +33,66 @@
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
       <bpmn2:ioSpecification id="_InputOutputSpecification_2">
-        <bpmn2:dataInput id="_DataInput_2" itemSubjectRef="_String" name="TaskName"/>
-        <bpmn2:dataInput id="_DataInput_3" itemSubjectRef="ItemDefinition_1" name="Priority"/>
-        <bpmn2:dataInput id="_DataInput_4" itemSubjectRef="_String" name="Comment"/>
-        <bpmn2:dataInput id="_DataInput_5" itemSubjectRef="_String" name="GroupId"/>
-        <bpmn2:dataInput id="_DataInput_6" itemSubjectRef="_Boolean" name="Skippable"/>
-        <bpmn2:dataInput id="_DataInput_7" itemSubjectRef="_String" name="Content"/>
-        <bpmn2:dataInput id="_DataInput_8" itemSubjectRef="_String" name="Locale"/>
-        <bpmn2:dataOutput id="DataOutput_1" itemSubjectRef="_String" name="clientName_"/>
-        <bpmn2:dataOutput id="DataOutput_2" itemSubjectRef="_String" name="contentDescription_"/>
+        <bpmn2:dataInput id="DataInput_1" itemSubjectRef="ItemDefinition_3" name="_client"/>
+        <bpmn2:dataInput id="DataInput_9" name="TaskName"/>
+        <bpmn2:dataInput id="DataInput_24" name="GroupId"/>
         <bpmn2:dataOutput id="DataOutput_3" itemSubjectRef="_Boolean" name="hasGraphics_"/>
-        <bpmn2:dataOutput id="DataOutput_4" itemSubjectRef="_String" name="contentCatogory_"/>
-        <bpmn2:inputSet id="_InputSet_2"/>
-        <bpmn2:inputSet id="_InputSet_3" name="New Input Set">
-          <bpmn2:dataInputRefs>_DataInput_2</bpmn2:dataInputRefs>
-          <bpmn2:dataInputRefs>_DataInput_3</bpmn2:dataInputRefs>
-          <bpmn2:dataInputRefs>_DataInput_4</bpmn2:dataInputRefs>
-          <bpmn2:dataInputRefs>_DataInput_5</bpmn2:dataInputRefs>
-          <bpmn2:dataInputRefs>_DataInput_6</bpmn2:dataInputRefs>
-          <bpmn2:dataInputRefs>_DataInput_7</bpmn2:dataInputRefs>
-          <bpmn2:dataInputRefs>_DataInput_8</bpmn2:dataInputRefs>
+        <bpmn2:dataOutput id="DataOutput_4" itemSubjectRef="ItemDefinition_5" name="contentCatogory_"/>
+        <bpmn2:dataOutput id="DataOutput_5" itemSubjectRef="_String" name="contentDescription_"/>
+        <bpmn2:dataOutput id="DataOutput_6" itemSubjectRef="ItemDefinition_7" name="proposedDate_"/>
+        <bpmn2:dataOutput id="DataOutput_7" itemSubjectRef="ItemDefinition_6" name="comments_"/>
+        <bpmn2:inputSet id="_InputSet_2">
+          <bpmn2:dataInputRefs>DataInput_1</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_9</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_24</bpmn2:dataInputRefs>
         </bpmn2:inputSet>
+        <bpmn2:inputSet id="_InputSet_3" name="New Input Set"/>
         <bpmn2:outputSet id="_OutputSet_2">
-          <bpmn2:dataOutputRefs>DataOutput_1</bpmn2:dataOutputRefs>
-          <bpmn2:dataOutputRefs>DataOutput_2</bpmn2:dataOutputRefs>
           <bpmn2:dataOutputRefs>DataOutput_3</bpmn2:dataOutputRefs>
           <bpmn2:dataOutputRefs>DataOutput_4</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>DataOutput_5</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>DataOutput_6</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>DataOutput_7</bpmn2:dataOutputRefs>
         </bpmn2:outputSet>
         <bpmn2:outputSet id="_OutputSet_3" name="Output Set"/>
       </bpmn2:ioSpecification>
-      <bpmn2:dataInputAssociation id="_DataInputAssociation_2">
-        <bpmn2:targetRef>_DataInput_2</bpmn2:targetRef>
-        <bpmn2:assignment id="Assignment_1">
-          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_2">createContent</bpmn2:from>
-          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_1">_DataInput_2</bpmn2:to>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_1">
+        <bpmn2:sourceRef>Property_1</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_1</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_9">
+        <bpmn2:targetRef>DataInput_9</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_20">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_40">createContent</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_39">DataInput_9</bpmn2:to>
         </bpmn2:assignment>
       </bpmn2:dataInputAssociation>
-      <bpmn2:dataInputAssociation id="_DataInputAssociation_3">
-        <bpmn2:targetRef>_DataInput_3</bpmn2:targetRef>
-      </bpmn2:dataInputAssociation>
-      <bpmn2:dataInputAssociation id="_DataInputAssociation_4">
-        <bpmn2:targetRef>_DataInput_4</bpmn2:targetRef>
-      </bpmn2:dataInputAssociation>
-      <bpmn2:dataInputAssociation id="_DataInputAssociation_5">
-        <bpmn2:targetRef>_DataInput_5</bpmn2:targetRef>
-        <bpmn2:assignment id="Assignment_48">
-          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_99">admin</bpmn2:from>
-          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_98">_DataInput_5</bpmn2:to>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_24">
+        <bpmn2:targetRef>DataInput_24</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_39">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_81">admin</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_80">DataInput_24</bpmn2:to>
         </bpmn2:assignment>
       </bpmn2:dataInputAssociation>
-      <bpmn2:dataInputAssociation id="_DataInputAssociation_6">
-        <bpmn2:targetRef>_DataInput_6</bpmn2:targetRef>
-      </bpmn2:dataInputAssociation>
-      <bpmn2:dataInputAssociation id="_DataInputAssociation_7">
-        <bpmn2:targetRef>_DataInput_7</bpmn2:targetRef>
-      </bpmn2:dataInputAssociation>
-      <bpmn2:dataInputAssociation id="_DataInputAssociation_8">
-        <bpmn2:targetRef>_DataInput_8</bpmn2:targetRef>
-      </bpmn2:dataInputAssociation>
-      <bpmn2:dataOutputAssociation id="DataOutputAssociation_1">
-        <bpmn2:sourceRef>DataOutput_1</bpmn2:sourceRef>
-        <bpmn2:targetRef>clientName</bpmn2:targetRef>
-      </bpmn2:dataOutputAssociation>
-      <bpmn2:dataOutputAssociation id="DataOutputAssociation_2">
-        <bpmn2:sourceRef>DataOutput_2</bpmn2:sourceRef>
-        <bpmn2:targetRef>contentDescription</bpmn2:targetRef>
-      </bpmn2:dataOutputAssociation>
       <bpmn2:dataOutputAssociation id="DataOutputAssociation_3">
         <bpmn2:sourceRef>DataOutput_3</bpmn2:sourceRef>
         <bpmn2:targetRef>hasGraphics</bpmn2:targetRef>
       </bpmn2:dataOutputAssociation>
       <bpmn2:dataOutputAssociation id="DataOutputAssociation_4">
         <bpmn2:sourceRef>DataOutput_4</bpmn2:sourceRef>
-        <bpmn2:targetRef>hasGraphics</bpmn2:targetRef>
+        <bpmn2:targetRef>Property_2</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_5">
+        <bpmn2:sourceRef>DataOutput_5</bpmn2:sourceRef>
+        <bpmn2:targetRef>contentDescription</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_6">
+        <bpmn2:sourceRef>DataOutput_6</bpmn2:sourceRef>
+        <bpmn2:targetRef>Property_6</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_7">
+        <bpmn2:sourceRef>DataOutput_7</bpmn2:sourceRef>
+        <bpmn2:targetRef>Property_3</bpmn2:targetRef>
       </bpmn2:dataOutputAssociation>
       <bpmn2:potentialOwner id="PotentialOwner_1">
         <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_1"/>

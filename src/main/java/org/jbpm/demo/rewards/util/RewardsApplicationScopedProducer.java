@@ -98,7 +98,7 @@ public class RewardsApplicationScopedProducer {
                 .entityManagerFactory(emf)
                 .userGroupCallback(usergroupCallback)
                 .registerableItemsFactory(factory)
-                .addAsset(ResourceFactory.newClassPathResource("newTask.bpmn2"),ResourceType.BPMN2).get();
+                .addAsset(ResourceFactory.newClassPathResource("newTask1.bpmn2"),ResourceType.BPMN2).get();
         return environment;
     }
     

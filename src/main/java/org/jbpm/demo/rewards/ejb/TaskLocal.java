@@ -17,6 +17,7 @@
 package org.jbpm.demo.rewards.ejb;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Local;
 
@@ -33,4 +34,6 @@ public interface TaskLocal {
 	public List<TaskSummary> retrieveClaimedTaskList(String user) throws Exception;
 
 	public void claimTask(String taskId, String name) throws  Exception;
+
+	Map<String, Object> getTaskVariable(int taskId);
 }

@@ -22,6 +22,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.Startup;
+import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
@@ -32,8 +33,12 @@ import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.process.ProcessInstance;
+import org.kie.api.runtime.process.WorkflowProcessInstance;
 import org.kie.internal.runtime.manager.cdi.qualifier.Singleton;
 import org.kie.internal.runtime.manager.context.EmptyContext;
+
+import com.jbpm.demo.entity.Client;
+
 
 @Startup
 @javax.ejb.Singleton
@@ -44,21 +49,12 @@ public class ProcessBean implements ProcessLocal {
     private UserTransaction ut;
 
     @Inject
-    @Singleton
-    private RuntimeManager singletonManager;
+    private ProcessEngineService processService;
 
-    @PostConstruct
-    public void configure() {
-        // use toString to make sure CDI initializes the bean
-        // this makes sure that RuntimeManager is started asap,
-        // otherwise after server restart complete task won't move process forward 
-        singletonManager.toString();
-    }
 
-    public long startProcess(String processCreator) throws Exception {
+    public long startProcess(Client client) throws Exception {
 
-        RuntimeEngine runtime = singletonManager.getRuntimeEngine(EmptyContext.get());
-        KieSession ksession = runtime.getKieSession();
+    	KieSession ksession=processService.getKsession();
 
         long processInstanceId = -1;
 
@@ -67,10 +63,13 @@ public class ProcessBean implements ProcessLocal {
         try {
             // start a new process instance
             Map<String, Object> params = new HashMap<String, Object>();
-            params.put("processCreator", processCreator);
-            ProcessInstance processInstance = ksession.startProcess("defaultPackage.newTask", params);
+            params.put("client", client);
+            ProcessInstance processInstance = ksession.startProcess("defaultPackage.newTask1", params);
 
             processInstanceId = processInstance.getId() ;
+            WorkflowProcessInstance p = (WorkflowProcessInstance) processInstance;  
+           System.out.println("Client Name Is "+((Client)p.getVariable("client")).getName());
+          
             
             System.out.println("Process started ... : processInstanceId = " + processInstanceId);
 
@@ -86,4 +85,6 @@ public class ProcessBean implements ProcessLocal {
         return processInstanceId;
     }
 
+  
+   
 }

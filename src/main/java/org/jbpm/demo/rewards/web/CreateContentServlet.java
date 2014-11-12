@@ -21,7 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ejb.EJB;
+
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -29,8 +30,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.jbpm.demo.rewards.ejb.ContentLocal;
+import com.jbpm.demo.entity.ContentCatogory;
+import com.jbpm.demo.service.ContentService;
 
 
 @WebServlet("/createContent")
@@ -38,14 +39,17 @@ public class CreateContentServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    @EJB
-    private ContentLocal contentService;
-
-    
+    @Inject
+    private ContentService contentService;
+   
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
     	String taskId=req.getParameter("taskId");
+    	String processId=req.getParameter("processId");
     	 req.setAttribute("taskId", taskId);
+    	 req.setAttribute("client",contentService.getClient(taskId));
+    	 List <ContentCatogory> list=contentService.getContentCatogoriesFromProcess(processId);
+    	 req.setAttribute("contentCatogories",list);
          ServletContext context = this.getServletContext();
          RequestDispatcher dispatcher = context.getRequestDispatcher("/createContent.jsp");
          dispatcher.forward(req, res);
@@ -63,9 +67,12 @@ public class CreateContentServlet extends HttpServlet {
    
         String userId = req.getUserPrincipal().getName();
         String taskId=req.getParameter("taskId");
-        String clientName=req.getParameter("clientName");
         String contentDescription=req.getParameter("contentDescription");
         String hasGraphics=req.getParameter("hasGraphics");
+        String date=req.getParameter("date");
+        String contentCatogoryId=req.getParameter("contentCatogoryId");
+        
+        
         
         
         Map<String, Object> params = new HashMap<String, Object>();
@@ -74,7 +81,7 @@ public class CreateContentServlet extends HttpServlet {
         params.put("hasGraphics_", Boolean.valueOf(hasGraphics));
        
         try {
-			contentService.createContent( userId, taskId,params);
+        	contentService.createContent( userId, taskId,params);
 		} catch (Exception e) {
 			
 			e.printStackTrace();

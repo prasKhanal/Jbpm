@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jbpm.demo.rewards.ejb.ProcessLocal;
+import com.jbpm.demo.service.ProcessService;
 
 
 @WebServlet("/process")
@@ -36,24 +36,30 @@ public class ProcessServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @EJB
-    private ProcessLocal processService;
+    private ProcessService processService;
+    
+   
+    
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         
         String processCreator = req.getUserPrincipal().getName();
+        String clientId=req.getParameter("clientId");
 
         long processInstanceId = -1;
         try {
-            processInstanceId = processService.startProcess(processCreator);
+            processInstanceId = processService.startProcess(clientId);
         } catch (Exception e) {
             throw new ServletException(e);
         }
 
         String message =  "Process (id = " + processInstanceId + ") has been started by " + processCreator ;
+        
         req.setAttribute("message", message);
         ServletContext context = this.getServletContext();
-        RequestDispatcher dispatcher = context.getRequestDispatcher("/index.jsp");
+        RequestDispatcher dispatcher = context.getRequestDispatcher("/home");
         dispatcher.forward(req, res);
     }
 }

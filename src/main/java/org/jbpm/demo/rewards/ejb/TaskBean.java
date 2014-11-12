@@ -17,6 +17,7 @@
 package org.jbpm.demo.rewards.ejb;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -24,10 +25,8 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import javax.persistence.OptimisticLockException;
-import javax.transaction.NotSupportedException;
 import javax.transaction.RollbackException;
 import javax.transaction.Status;
-import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 import org.jbpm.services.task.exception.PermissionDeniedException;
@@ -41,7 +40,7 @@ public class TaskBean implements TaskLocal {
 
     @Resource
     private UserTransaction ut;
-
+    
     @Inject
     TaskService taskService;
     
@@ -53,6 +52,7 @@ public class TaskBean implements TaskLocal {
         
         try {
             list = taskService.getTasksAssignedAsPotentialOwner(actorId, "en-UK");
+            
             ut.commit();
         } catch (RollbackException e) {
             e.printStackTrace();
@@ -112,6 +112,12 @@ public class TaskBean implements TaskLocal {
 	        
 	        try {
 	           taskService.claim(taskId, actorId);
+	           taskService.getTaskContent(taskId);
+
+
+
+
+
 	            ut.commit();
 	        } catch (RollbackException e) {
 	            e.printStackTrace();
@@ -121,6 +127,8 @@ public class TaskBean implements TaskLocal {
 
 	@Override
 	public List<TaskSummary> retrieveClaimedTaskList(String actorId) throws Exception {
+
+	        
 		 ut.begin();
 	        
 	        List<TaskSummary> list;
@@ -146,6 +154,10 @@ public class TaskBean implements TaskLocal {
 		claimTask(Long.parseLong( taskId),name);
 		
 	}
+	@Override
+	public Map<String, Object> getTaskVariable(int taskId) {
+		return taskService.getTaskContent(taskId);
+		}
 	
 
 }

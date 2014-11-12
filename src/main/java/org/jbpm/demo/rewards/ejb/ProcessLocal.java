@@ -18,7 +18,9 @@ package org.jbpm.demo.rewards.ejb;
 
 import javax.ejb.Local;
 
+import com.jbpm.demo.entity.Client;
+
 @Local
 public interface ProcessLocal {
-    public long startProcess(String recipient) throws Exception;
+    public long startProcess(Client client) throws Exception;
 }
