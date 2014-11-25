@@ -10,8 +10,8 @@
     </web-resource-collection>
     <auth-constraint>
       <role-name>admin</role-name>
-      <role-name>GD</role-name>
-      <role-name>Client</role-name>
+      <role-name>gd</role-name>
+      <role-name>client</role-name>
     </auth-constraint>
     <user-data-constraint>
       <transport-guarantee>NONE</transport-guarantee>
@@ -47,12 +47,42 @@
     <role-name>admin</role-name>
   </security-role>
   <security-role>
-    <role-name>GD</role-name>
+    <role-name>gd</role-name>
   </security-role>
   <security-role>
-    <role-name>Client</role-name>
+    <role-name>client</role-name>
   </security-role>
-   <welcome-file-list>
+  <welcome-file-list>
     <welcome-file>home</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>AddGraphicsServlet</display-name>
+    <servlet-name>AddGraphicsServlet</servlet-name>
+    <servlet-class>org.jbpm.demo.rewards.web.AddGraphicsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddGraphicsServlet</servlet-name>
+    <url-pattern>/AddGraphicsServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>RuleServlet</display-name>
+    <servlet-name>RuleServlet</servlet-name>
+    <servlet-class>org.jbpm.demo.rewards.web.RuleServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RuleServlet</servlet-name>
+    <url-pattern>/RuleServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>addComment</display-name>
+    <servlet-name>addComment</servlet-name>
+    <servlet-class>org.jbpm.demo.rewards.web.addComment</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>addComment</servlet-name>
+    <url-pattern>/addComment</url-pattern>
+  </servlet-mapping>
 </web-app>

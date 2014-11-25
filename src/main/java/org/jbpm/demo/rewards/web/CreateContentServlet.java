@@ -71,14 +71,17 @@ public class CreateContentServlet extends HttpServlet {
         String hasGraphics=req.getParameter("hasGraphics");
         String date=req.getParameter("date");
         String contentCatogoryId=req.getParameter("contentCatogoryId");
+        String comment=req.getParameter("comment");
         
         
         
         
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("clientName_", clientName);
-        params.put("contentDescription_", contentDescription);
-        params.put("hasGraphics_", Boolean.valueOf(hasGraphics));
+        params.put("date", date);
+        params.put("contentDescription", contentDescription);
+        params.put("hasGraphics", hasGraphics);
+        params.put("contentCatogoryId", contentCatogoryId);
+        params.put("comment", comment);
        
         try {
         	contentService.createContent( userId, taskId,params);
