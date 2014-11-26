@@ -44,9 +44,8 @@
                 <div class="col-md-6" style="FONT-SIZE: medium;  border-top: 5px solid ;   border-left: 5px solid ;   border-right: 5px solid ;   border-bottom: 5px solid ;">
                     <h2>Add graphics</h2>
 
-                    <form action="createContent" method="post" enctype="multipart/form-data">
-                        <p>
-                        <%= request.getAttribute("message") == null ? "" : request.getAttribute("message") %></p>
+                    <form name="form" action="createContent" method="post" enctype="multipart/form-data">
+                        
                         <p>Client Name: <input name="clientName" readonly type="text"
                         value="<%= client.getName() %>">
                         </p>
@@ -163,9 +162,6 @@ function addComment(){
 				console.log('<tr><td>'+data.comment['date']+'</td><td>'+data.comment['comment']+'</td><td>'+data.comment['user']+'</td></tr>');
 					//var key = Object.keys(data.ruleList[x])[0];
 					//$('<tr><td>'+data.comment['date']+'</td><td>'+data.comment['comment']+'</td><td>'+data.comment['user']+'</td></tr>'.appendTo( "#commentTable > tbody" ));
-				
-			
-				
 			
 			});
 

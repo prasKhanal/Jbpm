@@ -14,7 +14,9 @@ function addField(){
 
 function fileinputmonitor(){
     $(".graphic").change(function(){
-        
+    	
+        var clientName=$('#clientName').val();
+        var processId=$('#processId').val();
     	var options = {
     			beforeSend : function() {        			
     				$("#progressbox").show();
@@ -47,7 +49,13 @@ function fileinputmonitor(){
     			}
     		};
     		$(this).ajaxForm(options);
-    		$(this).submit();
+    		$(this).submit(function(eventObj) {
+    			console.log('Name: ' + clientName);
+    			console.log('ProcessId: ' + processId);
+    			$(this).append('<input type="hidden" name="clientName" value="'+clientName+'" /> '); 
+    			$(this).append('<input type="hidden" name="processId" value="'+processId+'" /> ');
+    	      return true;
+    	  });
     		console.log('Final');
         addField();
     });

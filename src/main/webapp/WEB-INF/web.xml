@@ -9,9 +9,9 @@
       <url-pattern>/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
-      <role-name>admin</role-name>
+      <role-name>cm</role-name>
       <role-name>gd</role-name>
-      <role-name>client</role-name>
+      <role-name>ua</role-name>
     </auth-constraint>
     <user-data-constraint>
       <transport-guarantee>NONE</transport-guarantee>
@@ -24,7 +24,7 @@
       <url-pattern>/process</url-pattern>
     </web-resource-collection>
     <auth-constraint>
-      <role-name>admin</role-name>
+      <role-name>cm</role-name>
     </auth-constraint>
     <user-data-constraint>
       <transport-guarantee>NONE</transport-guarantee>
@@ -44,13 +44,13 @@
     </form-login-config>
   </login-config>
   <security-role>
-    <role-name>admin</role-name>
+    <role-name>cm</role-name>
   </security-role>
   <security-role>
     <role-name>gd</role-name>
   </security-role>
   <security-role>
-    <role-name>client</role-name>
+    <role-name>ua</role-name>
   </security-role>
   <welcome-file-list>
     <welcome-file>home</welcome-file>
